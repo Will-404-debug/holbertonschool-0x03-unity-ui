@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement; // Required to reload the scene
-using UnityEngine.UI; // Required to manipulate UI Text
+using UnityEngine.UI; // Required to manipulate UI Text and UI Image
 
 public class PlayerController : MonoBehaviour 
 {
@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     public Text scoreText; // Public Text variable to link with the ScoreText GameObject in the Inspector
     public Text healthText; // Public Text variable to link with the HealthText GameObject in the Inspector
+    public Text winLoseText; // Public Text variable to link with the WinLoseText GameObject
+    public Image winLoseBG; // Public Image variable to link with the WinLoseBG GameObject
 
     void Start()
     {
@@ -21,6 +23,10 @@ public class PlayerController : MonoBehaviour
         health = 5; // Reset health to 5
         SetScoreText(); // Call SetScoreText to initialize the score display
         SetHealthText(); // Call SetHealthText to initialize the health display
+
+        // Initially hide the WinLoseText and WinLoseBG
+        winLoseText.gameObject.SetActive(false);
+        winLoseBG.gameObject.SetActive(false);
     }
 
     void FixedUpdate()
@@ -69,7 +75,14 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.CompareTag("Goal")) // Check if the other object has the tag "Goal"
         {
-            Debug.Log("You win!"); // Log the victory message to the console
+            // Display the "You Win!" message
+            winLoseText.text = "You Win!";
+            winLoseText.color = Color.black; // Change the WinLoseText color to black
+            winLoseBG.color = Color.green; // Change the WinLoseBG color to green
+            
+            // Make the text and background visible
+            winLoseText.gameObject.SetActive(true);
+            winLoseBG.gameObject.SetActive(true);
         }
     }
 
