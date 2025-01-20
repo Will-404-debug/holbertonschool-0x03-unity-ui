@@ -9,10 +9,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
     private int score = 0; // Private score variable initialized to 0
-
     public int health = 5; // Public health variable initialized to 5
 
     public Text scoreText; // Public Text variable to link with the ScoreText GameObject in the Inspector
+    public Text healthText; // Public Text variable to link with the HealthText GameObject in the Inspector
 
     void Start()
     {
@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
         score = 0; // Reset score to 0
         health = 5; // Reset health to 5
         SetScoreText(); // Call SetScoreText to initialize the score display
+        SetHealthText(); // Call SetHealthText to initialize the health display
     }
 
     void FixedUpdate()
@@ -53,12 +54,11 @@ public class PlayerController : MonoBehaviour
             score++; // Increment the score
             SetScoreText(); // Update the score display
             other.gameObject.SetActive(false); // Disable the Coin GameObject
-            // Alternatively, you could destroy the Coin: Destroy(other.gameObject);
         }
         else if (other.CompareTag("Trap")) // Check if the other object has the tag "Trap"
         {
             health--; // Decrement the health
-            Debug.Log("Health: " + health); // Log the health to the console
+            SetHealthText(); // Update the health display
 
             // Optionally, you can add logic to handle what happens when health reaches zero
             if (health <= 0)
@@ -77,5 +77,11 @@ public class PlayerController : MonoBehaviour
     void SetScoreText()
     {
         scoreText.text = "Score: " + score; // Update the ScoreText UI element with the current score
+    }
+
+    // Method to update the health text in the UI
+    void SetHealthText()
+    {
+        healthText.text = "Health: " + health; // Update the HealthText UI element with the current health
     }
 }
