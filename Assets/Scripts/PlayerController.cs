@@ -45,10 +45,19 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Check if health is 0
-        if (health == 0)
+        if (health <= 0)
         {
-            Debug.Log("Game Over!"); // Log "Game Over!" to the console
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
+            // Display "Game Over!" message
+            winLoseText.text = "Game Over!";
+            winLoseText.color = Color.white; // Change the WinLoseText color to white
+            winLoseBG.color = Color.red; // Change the WinLoseBG color to red
+            
+            // Show the WinLoseText and WinLoseBG
+            winLoseText.gameObject.SetActive(true);
+            winLoseBG.gameObject.SetActive(true);
+
+            // Optionally, reload the scene or pause the game here if you want to stop further movement
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Uncomment if you want to reload the scene
         }
     }
 
@@ -69,8 +78,8 @@ public class PlayerController : MonoBehaviour
             // Optionally, you can add logic to handle what happens when health reaches zero
             if (health <= 0)
             {
-                Debug.Log("Game Over"); // Example of game over condition
-                // Here, you can add further logic for game over, respawning, etc.
+                // The "Game Over!" display will be handled in Update when health reaches 0
+                // Debug.Log("Game Over!"); // Commented out to follow the request
             }
         }
         else if (other.CompareTag("Goal")) // Check if the other object has the tag "Goal"
