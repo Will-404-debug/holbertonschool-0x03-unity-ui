@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement; // Required to reload the scene
+using UnityEngine.SceneManagement; // Required to load scenes
 using UnityEngine.UI; // Required to manipulate UI Text and UI Image
 using System.Collections; // Required for coroutines
 
@@ -59,6 +59,13 @@ public class PlayerController : MonoBehaviour
 
             // Start the coroutine to wait for 3 seconds before reloading the scene
             StartCoroutine(LoadScene(3)); // Wait for 3 seconds before reloading
+        }
+
+        // Check if the Esc key is pressed to go back to the main menu
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // Load the menu scene
+            SceneManager.LoadScene("menu"); // Ensure that "menu" is the name of your menu scene
         }
     }
 
