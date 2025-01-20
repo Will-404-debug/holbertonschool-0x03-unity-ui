@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement; // Required to reload the scene
 using UnityEngine.UI; // Required to manipulate UI Text and UI Image
+using System.Collections; // Required for coroutines
 
 public class PlayerController : MonoBehaviour 
 {
@@ -56,8 +57,8 @@ public class PlayerController : MonoBehaviour
             winLoseText.gameObject.SetActive(true);
             winLoseBG.gameObject.SetActive(true);
 
-            // Optionally, reload the scene or pause the game here if you want to stop further movement
-            // SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Uncomment if you want to reload the scene
+            // Start the coroutine to wait for 3 seconds before reloading the scene
+            StartCoroutine(LoadScene(3)); // Wait for 3 seconds before reloading
         }
     }
 
@@ -78,8 +79,7 @@ public class PlayerController : MonoBehaviour
             // Optionally, you can add logic to handle what happens when health reaches zero
             if (health <= 0)
             {
-                // The "Game Over!" display will be handled in Update when health reaches 0
-                // Debug.Log("Game Over!"); // Commented out to follow the request
+                // The "Game Over!" display and scene reloading is handled in Update
             }
         }
         else if (other.CompareTag("Goal")) // Check if the other object has the tag "Goal"
@@ -92,6 +92,9 @@ public class PlayerController : MonoBehaviour
             // Make the text and background visible
             winLoseText.gameObject.SetActive(true);
             winLoseBG.gameObject.SetActive(true);
+
+            // Start the coroutine to wait for 3 seconds before reloading the scene
+            StartCoroutine(LoadScene(3)); // Wait for 3 seconds before reloading
         }
     }
 
@@ -105,5 +108,12 @@ public class PlayerController : MonoBehaviour
     void SetHealthText()
     {
         healthText.text = "Health: " + health; // Update the HealthText UI element with the current health
+    }
+
+    // Coroutine that waits for the specified number of seconds before reloading the scene
+    IEnumerator LoadScene(float seconds)
+    {
+        yield return new WaitForSeconds(seconds); // Wait for the specified time
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the current scene
     }
 }
